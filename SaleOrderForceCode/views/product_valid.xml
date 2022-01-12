@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+
+
+        <record id="action_customer_valid" model="ir.actions.act_window">
+            <field name="name">Customer Valid</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('code_valid','=',True)]</field>
+        </record>
+
+        <menuitem id="menu_customer_valid"
+            name="Customer Valid"
+            action="action_customer_valid"
+            sequence="2"
+            groups="base.group_user"
+            parent = "ShopSale_root"/>
+    </data>
+</odoo>
