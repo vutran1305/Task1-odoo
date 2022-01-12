@@ -10,6 +10,7 @@ class OrderProduct(models.Model):
     Sale_order_discount_estimated = fields.Float(string ="Sale order discount estimated" , default = 0 )
     priceOneProduct = fields.Float(string = "Price of one product" , default = 0 )
     payment = fields.Float(string = "Total payment" )
+    discount_code = fields.Text(string ="Discount code" , default = "")
 
 
     @api.onchange('quantity', 'priceOneProduct' , 'customer_order')
@@ -18,7 +19,9 @@ class OrderProduct(models.Model):
             self.total = self.priceOneProduct * float(self.quantity)
             self.Sale_order_discount_estimated = 0
             self.payment = self.total
+            self.discount_code = "None"
         else:
+            self.discount_code = self.customer_order.code
             self.total = self.priceOneProduct * float(self.quantity)
             last = self.customer_order.code
             last = float(last[4:len(last)])*1.0

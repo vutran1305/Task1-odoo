@@ -11,6 +11,7 @@
                   <field name="quantity"/>
                     <field name="priceOneProduct" />
                   <field name="total" readonly="1" force_save="1" />
+                    <field name = "discount_code" readonly="1"  force_save="1"/>
                     <field name="Sale_order_discount_estimated" readonly="1" force_save="1"/>
                      <field name="payment" readonly="1" force_save="1" />
 
@@ -27,9 +28,10 @@
                 <tree string="Order" default_order="create_date desc">
                     <field name="customer_order"/>
                     <field name="quantity"/>
-                    <field name="total"/>
-                    <field name="Sale_order_discount_estimated"/>
                     <field name="priceOneProduct"/>
+                    <field name="total"/>
+                    <field name="discount_code" />
+                    <field name="Sale_order_discount_estimated"/>
                     <field name="payment"/>
                 </tree>
             </field>
