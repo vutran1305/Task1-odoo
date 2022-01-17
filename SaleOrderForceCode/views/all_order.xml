@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-            <record id="order_form_view_product" model="ir.ui.view">
+
+
+        <record id="order_form_view_product" model="ir.ui.view">
             <field name="name">Customer order form </field>
             <field name="model">order.product</field>
             <field name="arch" type="xml">
@@ -15,8 +17,6 @@
                     <field name="Sale_order_discount_estimated" readonly="1" force_save="1"/>
                      <field name="payment" readonly="1" force_save="1" />
                     <field name="order_valid" readonly="1" force_save="1" />
-
-
                 </group>
               </form>
             </field>
@@ -44,7 +44,7 @@
             <field name="name">Order Product</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">order.product</field>
-            <field name="domain">[('order_valid','=',True)]</field>
+            <field name="domain">[]</field>
             <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('order_tree_view')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('order_form_view_product')})]"/>
@@ -52,9 +52,9 @@
 
 
    <menuitem id="menu_order"
-            name="Order product"
+            name="All order"
            action="action_order_product"
-            sequence="9"
+            sequence="8"
             groups="base.group_user"
             parent = "ShopSale_root"/>
     </data>

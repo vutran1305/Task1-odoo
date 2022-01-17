@@ -33,7 +33,7 @@
             <field name="model">customer</field>
             <field name="arch" type="xml">
                 <tree string="Customer" default_order="create_date desc">
-                    <field name='id' string = "ID" style="text-align:center"/>
+                    <field name='id' string = "ID"/>
                     <field name="name"/>
                     <field name="birthday"/>
                     <field name="code"/>

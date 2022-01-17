@@ -1,5 +1,5 @@
 from odoo import models , fields ,api
-
+from odoo.exceptions import UserError, ValidationError
 
 class OrderProduct(models.Model):
     _name = "order.product"
@@ -11,7 +11,7 @@ class OrderProduct(models.Model):
     priceOneProduct = fields.Float(string = "Price of one product" , default = 0 )
     payment = fields.Float(string = "Total payment" , compute= '_total_payment')
     discount_code = fields.Text(string ="Discount code" , related = "customer_order.code")
-    order_valid = fields.Boolean('Order Valid', default=False)
+    order_valid = fields.Boolean('Order Valid', default=False , related = "customer_order.code_valid")
 
 
     @api.onchange('quantity', 'priceOneProduct' , 'customer_order')
@@ -32,9 +32,21 @@ class OrderProduct(models.Model):
     @api.depends('quantity','priceOneProduct','customer_order.code','discount_code')
     def _total_payment(self):
         for record in self:
-            record.total = record.priceOneProduct * float(record.quantity)
-            discount = record.discount_code
-            discount = float(discount[4:len(discount)]) * 1.0
-            record.Sale_order_discount_estimated = (record.total * discount) / 100.0
-            record.payment = record.total - record.Sale_order_discount_estimated
+            if not record.order_valid:
+                record.total = record.priceOneProduct * float(record.quantity)
+                record.Sale_order_discount_estimated = 0
+                record.payment = record.total
+            else:
+                record.total = record.priceOneProduct * float(record.quantity)
+                discount = record.discount_code
+                discount = float(discount[4:len(discount)]) * 1.0
+                record.Sale_order_discount_estimated = (record.total * discount) / 100.0
+                record.payment = record.total - record.Sale_order_discount_estimated
+
+    @api.constrains('customer_order','quantity','priceOneProduct')
+    def _check_Validation(self):
+        for record in self:
+            if not record.customer_order or not record.quantity or not record.priceOneProduct:
+                raise ValidationError("Vui lòng điền đúng các trường")
+
 

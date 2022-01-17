@@ -2,9 +2,6 @@
 <odoo>
     <data>
 
-
-
-
 <!--        Action trỏ đến view -->
         <record id="action_customer_valid" model="ir.actions.act_window">
             <field name="name">Customer</field>

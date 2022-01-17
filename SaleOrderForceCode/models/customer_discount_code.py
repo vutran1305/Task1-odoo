@@ -38,6 +38,13 @@ class Customer(models.Model):
         else:
             return False
 
+    @api.constrains('name','code','birthday')
+    def _check_Validation(self):
+        for record in self:
+            if not record.name or not record.code or not record.birthday:
+                raise ValidationError("Vui lòng điền đúng các trường")
+
+
 
 
 

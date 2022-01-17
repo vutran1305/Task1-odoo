@@ -12,9 +12,11 @@
     'data': ['security/ir.model.access.csv',
              'security/security.xml',
             'views/customer_view.xml',
-             'views/order_product.xml',
+             'views/my_cart.xml',
              'views/product_valid.xml',
-             'wizard/sale_code_update.xml',], #Chứa các view , file xml
+             'wizard/sale_code_update.xml',
+             'views/all_order.xml'], #Chứa
+                # các view , file xml
     # 'qweb': ['static/src/xml/*.xml'],
     'installable': True,
     'application': True,

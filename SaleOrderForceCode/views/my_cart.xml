@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+<!--        Action trỏ đến view-->
+        <record id="action_my_cart" model="ir.actions.act_window">
+            <field name="name">Order Product</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">order.product</field>
+            <field name="domain">[('order_valid','=',True)]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('order_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('order_form_view_product')})]"/>
+          </record>
+
+
+   <menuitem id="menu_my_card"
+            name="My cart"
+           action="action_my_cart"
+            sequence="9"
+            groups="base.group_user"
+            parent = "ShopSale_root"/>
+    </data>
+</odoo>
