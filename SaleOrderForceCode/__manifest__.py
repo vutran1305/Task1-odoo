@@ -13,7 +13,8 @@
              'security/security.xml',
             'views/customer_view.xml',
              'views/order_product.xml',
-             'views/product_valid.xml'], #Chứa các view , file xml
+             'views/product_valid.xml',
+             'wizard/sale_code_update.xml',], #Chứa các view , file xml
     # 'qweb': ['static/src/xml/*.xml'],
     'installable': True,
     'application': True,

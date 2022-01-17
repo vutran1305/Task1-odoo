@@ -19,7 +19,7 @@
                             </group>
                             <group>
                                 <field name="code"/>
-                                 <field name="code_valid"/>
+                                 <field name="code_valid" readonly="1" force_save="1"/>
                             </group>
                         </group>
 
@@ -32,12 +32,12 @@
             <field name="name">customer.tree.view</field>
             <field name="model">customer</field>
             <field name="arch" type="xml">
-                <tree string="Pets" default_order="create_date desc">
+                <tree string="Customer" default_order="create_date desc">
                     <field name="name"/>
                     <field name="birthday"/>
                     <field name="code"/>
-                    <field name="gender"/>
-
+                    <field name = 'gender'/>
+                    <field name="code_valid"/>
                   
                 </tree>
             </field>

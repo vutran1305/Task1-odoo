@@ -10,17 +10,19 @@ class OrderProduct(models.Model):
     Sale_order_discount_estimated = fields.Float(string ="Sale order discount estimated" , default = 0 )
     priceOneProduct = fields.Float(string = "Price of one product" , default = 0 )
     payment = fields.Float(string = "Total payment" )
-    discount_code = fields.Text(string ="Discount code" , default = "")
+    discount_code = fields.Text(string ="Discount code" , related = "customer_order.code")
+    order_valid = fields.Boolean('Order Valid', default=False)
 
 
-    @api.onchange('quantity', 'priceOneProduct' , 'customer_order')
+    @api.onchange('quantity', 'priceOneProduct' , 'customer_order','discount_code')
     def _onchange_code(self):
         if not self.quantity  or not self.customer_order or not  self.priceOneProduct or self.customer_order.code_valid == False:
             self.total = self.priceOneProduct * float(self.quantity)
             self.Sale_order_discount_estimated = 0
             self.payment = self.total
-            self.discount_code = "None"
+            self.discount_code = self.customer_order.code
         else:
+            self.order_valid = self.customer_order.code_valid
             self.discount_code = self.customer_order.code
             self.total = self.priceOneProduct * float(self.quantity)
             last = self.customer_order.code

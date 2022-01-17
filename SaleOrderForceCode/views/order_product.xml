@@ -14,6 +14,7 @@
                     <field name = "discount_code" readonly="1"  force_save="1"/>
                     <field name="Sale_order_discount_estimated" readonly="1" force_save="1"/>
                      <field name="payment" readonly="1" force_save="1" />
+                    <field name="order_valid" readonly="1" force_save="1" />
 
 
                 </group>
@@ -33,6 +34,7 @@
                     <field name="discount_code" />
                     <field name="Sale_order_discount_estimated"/>
                     <field name="payment"/>
+                    <field name = 'order_valid' />
                 </tree>
             </field>
         </record>
@@ -42,7 +44,7 @@
             <field name="name">Order Product</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">order.product</field>
-<!--            <field name="view_mode">tree,form</field>-->
+            <field name="domain">[('order_valid','=',True)]</field>
             <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('order_tree_view')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('order_form_view_product')})]"/>
