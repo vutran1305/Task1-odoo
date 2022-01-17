@@ -30,6 +30,7 @@
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="view_id" ref="view_sale_code_update_wizard"/>
+
     </record>
 
 </odoo>

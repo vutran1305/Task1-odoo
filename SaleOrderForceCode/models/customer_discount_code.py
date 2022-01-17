@@ -1,5 +1,5 @@
 from odoo import models , fields ,api
-
+from odoo.exceptions import UserError, ValidationError
 class Customer(models.Model):
     _name = "customer"
     _description = "Customer "
@@ -26,6 +26,17 @@ class Customer(models.Model):
                     self.code_valid = True
                 else :
                     self.code_valid = False
+
+
+
+    @api.model
+    def checkcode(self, code):
+        fist = code[0:4]
+        last = code[4:len(code)]
+        if fist == "VIP_" and len(last) < 3 and last.isdigit():
+            return True
+        else:
+            return False
 
 
 

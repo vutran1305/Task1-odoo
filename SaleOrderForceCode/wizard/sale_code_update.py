@@ -35,17 +35,27 @@ class SaleCodeUpdateWizard(models.TransientModel):
         ids = self.env.context['active_ids']  # selected record ids
         customers = self.env["customer"].browse(ids)
         new_data = {}
-        if self.code:
+        if self.code and self.checkcode(code=self.code):
             new_data["code"] = self.code
             new_data["code_valid"] = self.checkcode(code=self.code)
-            # new_data["order_id.discount_code"] = self.code
-        customers.write(new_data)
+            customers.write(new_data)
+        else:
+            raise ValidationError("Mã sale không hợp lệ")
+
+
+
 
     @api.model
     def checkcode(self,code):
-        fist = code[0:4]
-        last = code[4:len(code)]
-        if fist == "VIP_" and len(last) < 3 and last.isdigit():
-            return True
-        else:
+        if len(code) < 5:
             return False
+        else:
+            fist = code[0:4]
+            last = code[4:len(self.code)]
+            if fist == "VIP_" and len(last) < 3 and last.isdigit():
+                return True
+            else:
+                return False
+
+
+
