@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="advance_sale" model="res.groups">
+        <field name="name">Advanced Sale </field>
+    </record>
+
+
+    <record model="ir.rule" id="advance_sale_customer_discount_rule" >
+            <field name="name">#User can only see </field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('sale_order_force_code.advance_sale'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+<!--            <field name="domain_force"> [('user_id','=',user.id)]</field>-->
+        </record>
+
+
+</odoo>
