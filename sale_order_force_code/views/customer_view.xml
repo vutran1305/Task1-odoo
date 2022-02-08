@@ -16,7 +16,7 @@
             </field>
         </record>
 
-customer_discount_code
+
         <!--                Tree view-->
         <record model="ir.ui.view" id="view_customer_tree_inherit">
            <field name="name">customer.tree.inherit</field>

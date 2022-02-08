@@ -10,27 +10,16 @@ class OrderProduct(models.Model):
 
 
 
-    @api.depends('order_line.tax_id', 'order_line.price_unit', 'amount_total', 'amount_untaxed','Sale_order_discount_estimated' )
-    def _compute_tax_totals_json(self):
-        def compute_taxes(order_line):
-            price = order_line.price_unit * (1 - (order_line.discount or 0.0) / 100.0)
-            order = order_line.order_id
-            return order_line.tax_id._origin.compute_all(price, order.currency_id, order_line.product_uom_qty,
-                                                         product=order_line.product_id,
-                                                         partner=order.partner_shipping_id)
+    @api.onchange('order_line' , 'Sale_order_discount_estimated' )
+    def _compute_discount_estimated(self):
+        for record in self:
+            sum = 0
+            for line in record.order_line:
+                sum += line.price_subtotal
+            record.amount_total = sum * (1 - (record.Sale_order_discount_estimated) / 100.0)
 
-        account_move = self.env['account.move']
-        for order in self:
-            tax_lines_data = account_move._prepare_tax_lines_data_for_totals_from_object(order.order_line,
-                                                                                         compute_taxes)
-            tax_totals = account_move._get_tax_totals(order.partner_id, tax_lines_data, order.amount_total,
-                                                      order.amount_untaxed, order.currency_id)
 
-            tax_totals["amount_total"] = tax_totals["amount_total"]  * (1 - (self.Sale_order_discount_estimated) / 100.0)
-            tax_totals["formatted_amount_total"] = '$ ' + str(tax_totals["amount_total"])
-            tax_totals["amount_untaxed"] = tax_totals["amount_untaxed"]  * (1 - (self.Sale_order_discount_estimated) / 100.0)
-            tax_totals["formatted_amount_untaxed"] = '$ ' + str(tax_totals["amount_untaxed"])
-            order.tax_totals_json = json.dumps(tax_totals)
+
 
 
 
