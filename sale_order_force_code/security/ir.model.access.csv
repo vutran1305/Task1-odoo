@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sale_code_update_wizard,access.sale.code.update.wizard,model_sale_code_update_wizard,sale_order_force_code.advance_sale,1,1,1,1
