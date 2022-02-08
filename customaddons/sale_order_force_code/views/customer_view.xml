@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+<!--            #Form view-->
+         <record id="view_customer_form_inherit" model="ir.ui.view">
+            <field name="name">customer.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after" >
+                    <field name="customer_discount_code" groups="sale_order_force_code.advance_sale"/>
+                    <field name="Sale_order_discount_estimated" groups="sale_order_force_code.advance_sale" readonly="1" force_save="1"/>
+                     <field name="code_valid"  groups="sale_order_force_code.advance_sale" readonly="1" force_save="1"/>
+
+                </xpath>
+            </field>
+        </record>
+
+
+        <!--                Tree view-->
+        <record model="ir.ui.view" id="view_customer_tree_inherit">
+           <field name="name">customer.tree.inherit</field>
+           <field name="model">res.partner</field>
+           <field name="type">tree</field>
+           <field name="inherit_id" ref="base.view_partner_tree"/>
+           <field name="arch" type="xml">
+                   <xpath expr="/tree/field[@name='email']" position="after">
+                       <field name="customer_discount_code" groups="sale_order_force_code.advance_sale"/>
+                       <field name="Sale_order_discount_estimated" groups="sale_order_force_code.advance_sale" readonly="1" force_save="1"/>
+                   </xpath>
+
+           </field>
+        </record>
+
+
+
+<!--                Filter view-->
+         <record model="ir.ui.view" id="view_product_warranty_search_inherit">
+           <field name="name">customer.filter.search.inherit</field>
+           <field name="model">res.partner</field>
+           <field name="inherit_id" ref="base.view_res_partner_filter"/>
+           <field name="arch" type="xml">
+               <xpath expr="//filter[@name='inactive']" position='after'>
+                   <filter string="Special customer" name ='code_valid' domain="[('code_valid','=', 'True')]"/>
+                </xpath>
+           </field>
+        </record>
+
+
+
+        <record id="action_customer_valid" model="ir.actions.act_window">
+            <field name="name">Special customer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="domain">[('code_valid','=',True)]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_customer_tree_inherit')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_customer_form_inherit')})]"/>
+          </record>
+
+
+
+        <menuitem id="menu_customer_valid"
+            name="Special customer"
+            action="action_customer_valid"
+            sequence="2"
+            groups="base.group_user"
+            parent = "sale.sale_order_menu" />
+
+
+    </data>
+</odoo>
